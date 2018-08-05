@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 一般为该xml文件的路径+文件名 -->
+<mapper namespace="com.luckyluke.jiexin.mapper.FactoryMapper">
+    <!-- resultMap 映射-->
+    <!-- 对于POJO中属性名于表中字段名不一致且无法自动映射的情况，应设置resultMap自定义映射规则
+    自动映射要求：
+        1-POJO的属性名与表中字段名
+            1）若两者一模一样，无需开启驼峰命名
+            2）若属性名采用驼峰命名，字段名采用数据库规范命名，且二者相对应，
+                此时需要在全局配置文件中开启mapUnderscoreToCamelCase=true
+        2-表中字段
+            1）若不包含外键，自动映射可采用默认配置。
+            2）若包含外键，自动映射应采用autoMappingBehavior=true，进行嵌套映射。
+    -->
+    <resultMap id="factoryRM" type="com.luckyluke.jiexin.domain.Factory">
+        <!-- 主键 -->
+        <id property="id" column="FACTORY_ID"/>
+        <!-- 一般属性 -->
+        <result property="fullName" column="FULL_NAME"/>
+        <result property="factoryName" column="FACTORY_NAME"/>
+        <result property="contacts" column="CONTACTS"/>
+        <result property="phone" column="PHONE"/>
+        <result property="mobile" column="MOBILE"/>
+        <result property="fax" column="FAX"/>
+        <result property="cnote" column="CNOTE"/>
+        <result property="inspector" column="INSPECTOR"/>
+        <result property="orderNo" column="ORDER_NO"/>
+        <result property="state" column="STATE"/>
+
+        <result property="createBy" column="CREATE_BY"/>
+        <result property="createDept" column="CREATE_DEPT"/>
+        <result property="createTime" column="CREATE_TIME"/>
+    </resultMap>
+
+    <!-- 查询所有生产厂家 -->
+    <select id="find" resultMap="factoryRM" parameterType="map">
+        SELECT * FROM factory_c
+        WHERE 1=1
+    </select>
+
+    <!-- 新增生产厂家信息-->
+    <!-- 对于 oracle jdbc驱动：当插入字段值为null时，必须告诉该驱动当前字段默认值的类型jdbcType=VARCHAR （mybatis定义）,mysql不用写   -->
+    <insert id="insert" parameterType="com.luckyluke.jiexin.domain.Factory">
+		INSERT INTO FACTORY_C
+		(FACTORY_ID,FULL_NAME,FACTORY_NAME,CONTACTS,PHONE,MOBILE,FAX,CNOTE,INSPECTOR,ORDER_NO,STATE,CREATE_BY,CREATE_DEPT,CREATE_TIME)
+		VALUES
+		(	#{id},
+			#{fullName, jdbcType=VARCHAR},
+			#{factoryName, jdbcType=VARCHAR},
+			#{contacts, jdbcType=VARCHAR},
+			#{phone, jdbcType=VARCHAR},
+			#{mobile, jdbcType=VARCHAR},
+			#{fax, jdbcType=VARCHAR},
+			#{cnote, jdbcType=VARCHAR},
+			#{inspector, jdbcType=VARCHAR},
+			#{orderNo, jdbcType=INTEGER},
+			#{state, jdbcType=VARCHAR},
+			#{createBy, jdbcType=VARCHAR},
+			#{createDept, jdbcType=VARCHAR},
+			#{createTime, jdbcType=TIMESTAMP}
+		)
+    </insert>
+
+    <!-- 查询一个 -->
+    <select id="get" parameterType="string" resultMap="factoryRM">
+        SELECT * FROM FACTORY_C
+        WHERE FACTORY_ID=#{pid}
+    </select>
+
+    <!-- 修改,动态SQL语句 -->
+    <update id="update" parameterType="com.luckyluke.jiexin.domain.Factory">
+        UPDATE FACTORY_C
+        <set>
+            <if test="fullName != null">FULL_NAME=#{fullName, jdbcType=VARCHAR},</if>
+            <if test="factoryName != null">FACTORY_NAME=#{factoryName, jdbcType=VARCHAR},</if>
+            <if test="contacts != null">CONTACTS=#{contacts, jdbcType=VARCHAR},</if>
+            <if test="phone != null">PHONE=#{phone, jdbcType=VARCHAR},</if>
+            <if test="mobile != null">MOBILE=#{mobile, jdbcType=VARCHAR},</if>
+            <if test="fax != null">FAX=#{fax, jdbcType=VARCHAR},</if>
+            <if test="cnote != null">CNOTE=#{cnote, jdbcType=VARCHAR},</if>
+            <if test="inspector != null">INSPECTOR=#{inspector, jdbcType=VARCHAR},</if>
+            <if test="orderNo != null">ORDER_NO=#{orderNo, jdbcType=INTEGER},</if>
+            <if test="state != null">STATE=#{state, jdbcType=VARCHAR},</if>
+        </set>
+        WHERE FACTORY_ID=#{id}
+    </update>
+
+    <!-- 删除一个-->
+    <delete id="deleteById" parameterType="string">
+        DELETE FROM factory_c
+        WHERE factory_id=#{id}
+    </delete>
+    
+    <!-- 批量删除 -->
+    <delete id="delete" parameterType="string">
+        DELETE FROM FACTORY_C
+        WHERE FACTORY_ID IN 
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 修改状态 -->
+    <update id="updateState" parameterType="map">
+        UPDATE FACTORY_C SET STATE=#{state}
+        WHERE FACTORY_ID IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+</mapper>
