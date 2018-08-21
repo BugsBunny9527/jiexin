@@ -20,7 +20,7 @@
                         </li>
                         <li id="delete"><a href="#"
                                            onclick="formSubmit('deleteById.action','_self');this.blur();">删除</a></li>
-                        <li id="delete"><a href="#" onclick="formSubmit('delete.action','_self');this.blur();">删除N</a>
+                        <li id="delete"><a href="#" onclick="formSubmit('delete.action','_self');this.blur();">批量删除</a>
                         </li>
                         <li id="new"><a href="#" onclick="formSubmit('start.action','_self');this.blur();">启用</a></li>
                         <li id="new"><a href="#" onclick="formSubmit('stop.action','_self');this.blur();">停用</a></li>
@@ -70,10 +70,11 @@
                             <td>${o.mobile}</td>
                             <td>${o.fax}</td>
                             <td>${o.inspector}</td>
-                            <td>
+                            <td><b>
                                 <c:if test="${o.state==1}"><a href="stop.action?id=${o.id}"><font
                                         color="green">启用</font></a></c:if>
                                 <c:if test="${o.state==0}"><a href="start.action?id=${o.id}">停用</a></c:if>
+                            </b>
                             </td>
                         </tr>
                     </c:forEach>

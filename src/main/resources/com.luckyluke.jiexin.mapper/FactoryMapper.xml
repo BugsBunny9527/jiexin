@@ -40,6 +40,7 @@
     <select id="find" resultMap="factoryRM" parameterType="map">
         SELECT * FROM factory_c
         WHERE 1=1
+        <if test="state!=null"> and STATE=#{state}</if>
     </select>
 
     <!-- 新增生产厂家信息-->

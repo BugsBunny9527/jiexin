@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luckyluke.jiexin.mapper.ExtCproductMapper">
+    <resultMap id="extCproductRM" type="com.luckyluke.jiexin.domain.ExtCproduct">
+        <id property="id" column="EXT_CPRODUCT_ID"/>
+
+        <result property="contractProductId" column="CONTRACT_PRODUCT_ID"/>
+        <result property="factoryId" column="FACTORY_ID"/>
+
+        <result property="factoryName" column="FACTORY_NAME"/>
+        <result property="ctype" column="CTYPE"/>
+
+        <result property="productNo" column="PRODUCT_NO"/>
+        <result property="productImage" column="PRODUCT_IMAGE"/>
+        <result property="productDesc" column="PRODUCT_DESC"/>
+        <result property="cnumber" column="CNUMBER"/>
+        <result property="packingUnit" column="PACKING_UNIT"/>
+        <result property="price" column="PRICE"/>
+        <result property="amount" column="AMOUNT"/>
+        <result property="productRequest" column="PRODUCT_REQUEST"/>
+        <result property="orderNo" column="ORDER_NO"/>
+    </resultMap>
+
+    <!-- 新增附件 -->
+    <insert id="insert" parameterType="com.luckyluke.jiexin.domain.ExtCproduct">
+        INSERT INTO EXT_CPRODUCT_C
+        (EXT_CPRODUCT_ID,CONTRACT_PRODUCT_ID,FACTORY_ID,FACTORY_NAME,CTYPE,PRODUCT_NO,
+			PRODUCT_IMAGE,PRODUCT_DESC,CNUMBER,
+			PACKING_UNIT,PRICE,AMOUNT,PRODUCT_REQUEST,ORDER_NO)
+        VALUES (
+          #{id},
+			#{contractProductId},
+			#{factoryId},
+			#{factoryName, jdbcType=VARCHAR},
+			#{ctype, jdbcType=INTEGER},
+			#{productNo, jdbcType=VARCHAR},
+			#{productImage, jdbcType=VARCHAR},
+			#{productDesc, jdbcType=VARCHAR},
+			#{cnumber, jdbcType=INTEGER},
+			#{packingUnit, jdbcType=VARCHAR},
+			#{price, jdbcType=DOUBLE},
+			#{amount, jdbcType=DOUBLE},
+			#{productRequest, jdbcType=VARCHAR},
+			#{orderNo, jdbcType=INTEGER}
+        )
+    </insert>
+
+    <!-- 查找单个对应货物id的附件 -->
+    <select id="find" parameterType="map" resultMap="extCproductRM">
+        SELECT * FROM EXT_CPRODUCT_C
+        WHERE 1=1
+        <if test="contractProductId != null">
+            AND CONTRACT_PRODUCT_ID = #{contractProductId}
+        </if>
+    </select>
+
+    <!-- 更新附件 -->
+    <update id="update" parameterType="com.luckyluke.jiexin.domain.ExtCproduct">
+        UPDATE EXT_CPRODUCT_C
+        <set>
+            CONTRACT_PRODUCT_ID=#{contractProductId},
+            FACTORY_ID=#{factoryId},
+            <if test="factoryName != null">FACTORY_NAME=#{factoryName},</if>
+            <if test="ctype != null">CTYPE=#{ctype},</if>
+            <if test="productNo != null">PRODUCT_NO=#{productNo},</if>
+            <if test="productImage != null">PRODUCT_IMAGE=#{productImage},</if>
+            <if test="productDesc != null">PRODUCT_DESC=#{productDesc},</if>
+            <if test="cnumber != null">CNUMBER=#{cnumber},</if>
+            <if test="packingUnit != null">PACKING_UNIT=#{packingUnit},</if>
+            <if test="price != null">PRICE=#{price},</if>
+            <if test="amount != null">AMOUNT=#{amount},</if>
+            <if test="productRequest != null">PRODUCT_REQUEST=#{productRequest},</if>
+            <if test="orderNo != null">ORDER_NO=#{orderNo},</if>
+        </set>
+        WHERE  EXT_CPRODUCT_ID=#{id}
+    </update>
+
+    <!-- 根据附件id获取附件-->
+    <select id="get" parameterType="string" resultMap="extCproductRM">
+        SELECT * FROM EXT_CPRODUCT_C
+        WHERE EXT_CPRODUCT_ID = #{id}
+    </select>
+
+    <!-- 删除一个附件信息 -->
+    <delete id="deleteById" parameterType="string">
+        DELETE FROM EXT_CPRODUCT_C
+        WHERE EXT_CPRODUCT_ID = #{id}
+    </delete>
+
+    <!-- 级联删除：根据货物 id -->
+    <delete id="deleteByContractProductId" parameterType="string">
+        DELETE FROM EXT_CPRODUCT_C
+        WHERE CONTRACT_PRODUCT_ID IN
+        <foreach collection="array" separator="," close=")" open="(" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 级联删除：根据合同 id -->
+    <delete id="deleteByContractId" parameterType="string">
+        DELETE FROM EXT_CPRODUCT_C
+        WHERE CONTRACT_PRODUCT_ID IN (
+          SELECT CONTRACT_PRODUCT_ID FROM CONTRACT_PRODUCT_C
+          WHERE CONTRACT_ID IN
+          <foreach collection="array" separator="," close=")" open="(" item="id">
+           #{id}
+          </foreach>
+        )
+
+    </delete>
+</mapper>

@@ -31,4 +31,6 @@ public interface FactoryService {
 
     void stop(Serializable ids[]);                                //停用
 
+    List<Factory> getFactoryList();
+
 }

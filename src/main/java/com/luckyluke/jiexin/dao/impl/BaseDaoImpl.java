@@ -75,3 +75,4 @@ public class BaseDaoImpl<T> extends SqlSessionDaoSupport implements BaseDao<T> {
         return oList;
     }
 }
+

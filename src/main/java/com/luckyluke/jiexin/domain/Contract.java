@@ -7,9 +7,13 @@ import java.util.Date;
  */
 public class Contract {
     private String id;
+
+    private String cpnum;
+    private String extnum;
+
     private String offeror;
     private String contractNo;
-    private Date signingDate;
+    private java.util.Date signingDate;
     private String inputBy;
     private String checkBy;
     private String inspector;
@@ -17,26 +21,44 @@ public class Contract {
     private Integer importNum;
     private String crequest;
     private String customName;
-    private Date deliveryPeriod;
-    private Date shipTime;
+    private java.util.Date deliveryPeriod;
+    private java.util.Date shipTime;
     private String tradeTerms;
     private String remark;
-    private String printStyle;      //打印版式
-    private Integer oldState;       //归档用
+    private String printStyle;
+    private Integer oldState;
     private Integer state;
     private Integer outState;
+
     private String createBy;
     private String createDept;
-    private Date createTime;
+    private java.util.Date createTime;
 
 
     //以下省略 getter setter 方法
+
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCpnum() {
+        return cpnum;
+    }
+
+    public void setCpnum(String cpnum) {
+        this.cpnum = cpnum;
+    }
+
+    public String getExtnum() {
+        return extnum;
+    }
+
+    public void setExtnum(String extnum) {
+        this.extnum = extnum;
     }
 
     public String getOfferor() {
