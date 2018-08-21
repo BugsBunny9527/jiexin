@@ -9,6 +9,8 @@ public class OutProductVO {
     private String productNo;
     private String cnumber;
     private String factoryName;
+
+
     private String deliveryPeriod;
     private String shipTime;
     private String tradeTerms;

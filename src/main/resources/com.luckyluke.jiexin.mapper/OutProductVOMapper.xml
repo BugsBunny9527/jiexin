@@ -25,6 +25,6 @@
             (select contract_id,product_no,cnumber,packing_unit,factory_name from contract_product_c) cp
             on c.contract_id=cp.contract_id
 
-        where to_char(c.ship_time,'yyyy-MM') = #{inputDate}l
+        where to_char(c.ship_time,'yyyy-MM') = #{inputDate}
     </select>
 </mapper>
