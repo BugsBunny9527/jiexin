@@ -2,10 +2,9 @@ package com.luckyluke.jiexin.controller.cargo.outproduct;
 
 import com.luckyluke.jiexin.controller.BaseController;
 import com.luckyluke.jiexin.service.OutProductVOService;
-import com.luckyluke.jiexin.util.DownloadUtil;
+import com.luckyluke.util.DownloadUtil;
 import com.luckyluke.jiexin.vo.OutProductVO;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

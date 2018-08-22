@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class ContractVO {
     private String id;
-    private List<ContractProduct> contractProducts;
+    private List<ContractProductVO> contractProducts;
     private String cpnum;
     private String extnum;
     private String offeror;
@@ -43,11 +43,11 @@ public class ContractVO {
         this.id = id;
     }
 
-    public List<ContractProduct> getContractProducts() {
+    public List<ContractProductVO> getContractProducts() {
         return contractProducts;
     }
 
-    public void setContractProducts(List<ContractProduct> contractProducts) {
+    public void setContractProducts(List<ContractProductVO> contractProducts) {
         this.contractProducts = contractProducts;
     }
 

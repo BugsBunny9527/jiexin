@@ -2,6 +2,7 @@ package com.luckyluke.jiexin.controller.cargo.contract;
 
 import com.luckyluke.jiexin.controller.BaseController;
 import com.luckyluke.jiexin.domain.Contract;
+import com.luckyluke.jiexin.print.ContractPrint;
 import com.luckyluke.jiexin.service.ContractService;
 import com.luckyluke.jiexin.vo.ContractVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -82,5 +85,15 @@ public class ContractController extends BaseController {
         contractService.cancel(id);
 
         return "redirect:/cargo/contract/list.action";
+    }
+
+    //打印
+    @RequestMapping("/cargo/contract/print.action")
+    public void print(String id, HttpServletRequest request, HttpServletResponse response) throws Exception{
+        ContractPrint cp = new ContractPrint();
+
+        //查询出 id 所对应的 ContractVO
+        ContractVO obj = contractService.view(id);
+        cp.print(obj, request.getSession().getServletContext().getRealPath("/"), response);
     }
 }

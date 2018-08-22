@@ -1,4 +1,4 @@
-package com.luckyluke.jiexin.util;
+package com.luckyluke.util;
 
 
 // 这是一个数数学计算的class 缩略图生成的时候需要用到。

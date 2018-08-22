@@ -1,4 +1,4 @@
-package com.luckyluke.jiexin.util;
+package com.luckyluke.util;
 
 
 public class FormatStyle {

@@ -1,4 +1,4 @@
-package com.luckyluke.jiexin.util;
+package com.luckyluke.util;
 
 import java.sql.Date;
 import java.sql.Timestamp;
